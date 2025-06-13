@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🌱Crop Recommender</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f9f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      max-width: 400px;
+      text-align: center;
+    }
+    input, select {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      margin-top: 2px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    #result {
+      margin-top: 20px;
+      font-weight: bold;
+      color: #2d6a4f;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>🌱Crop Recommender</h2>
+    <form id="cropForm">
+      <input type="number" name="N" placeholder="Nitrogen (N)" required>
+      <input type="number" name="P" placeholder="Phosphorus (P)" required>
+      <input type="number" name="K" placeholder="Potassium (K)" required>
+      <input type="number" name="ph" placeholder="pH Level" step="0.1" required>
+      <select name="model" required>
+        <option value=""> Select Model</option>
+        <option value="logistic">Logistic Regression</option>
+        <option value="rf">Random Forest</option>
+      </select>
+      <button type="submit">🔍 Recommend Crop</button>
+    </form>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    const form = document.getElementById('cropForm');
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const payload = Object.fromEntries(formData.entries());
+
+      const response = await fetch('http://127.0.0.1:5000/predict', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await response.json();
+      document.getElementById('result').innerText = `🌿 Recommended Crop: ${data.crop} ${data.emoji}`;
+    });
+  </script>
+</body>
+</html>
