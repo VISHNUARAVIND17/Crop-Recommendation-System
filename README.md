@@ -28,7 +28,7 @@ A lightweight machine learning-powered web application that recommends the most 
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/VISHNUARAVIND17/crop-recommendation-system.git
+git clone https://github.com/VISHNUARAVIND17/Crop-Recommendation-System.git
 cd crop-recommendation-system
 ```
 
